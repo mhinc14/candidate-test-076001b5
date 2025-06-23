@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { getDropdownOptionClasses } from '../../shared/utils/stylingUtils';
+import { useClickOutside } from '../../shared/hooks/useClickOutside';
 
 interface Option<T> {
 	value: T;
@@ -22,7 +23,7 @@ export const CustomSelect = <T extends string>({
 	className = ''
 }: CustomSelectProps<T>) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const dropdownRef = useRef<HTMLDivElement>(null);
+	const dropdownRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
 	const selectedOption = options.find((option) => option.value === value);
 
@@ -30,21 +31,6 @@ export const CustomSelect = <T extends string>({
 		onChange(optionValue);
 		setIsOpen(false);
 	};
-
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
-				setIsOpen(false);
-			}
-		};
-
-		document.addEventListener('mousedown', handleClickOutside);
-		return () =>
-			document.removeEventListener('mousedown', handleClickOutside);
-	}, []);
 
 	return (
 		<div className={`relative ${className}`} ref={dropdownRef}>

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DashboardRootState, DashboardDispatch } from '../store';
 import { updateWorkStatus } from '../store/userSlice';
 import { WorkStatus } from '../../shared/types';
-import { STATUS_LABELS } from '../../shared/constants';
+import { STATUS_LABELS, WORK_STATUS_OPTIONS } from '../../shared/constants';
 import { CustomSelect } from './CustomSelect';
 
 export const WorkStatusCard = ({ className = '' }: { className?: string }) => {
@@ -13,14 +13,6 @@ export const WorkStatusCard = ({ className = '' }: { className?: string }) => {
 		dispatch(updateWorkStatus(status));
 	};
 
-	const options = [
-		{ value: 'looking' as WorkStatus, label: 'Currently looking for work' },
-		{ value: 'passive' as WorkStatus, label: 'Passively looking for work' },
-		{
-			value: 'not_looking' as WorkStatus,
-			label: "Don't want to hear about work"
-		}
-	];
 
 	return (
 		<div
@@ -34,7 +26,7 @@ export const WorkStatusCard = ({ className = '' }: { className?: string }) => {
 
 				<CustomSelect
 					value={profile.workStatus}
-					options={options}
+					options={WORK_STATUS_OPTIONS}
 					onChange={handleStatusChange}
 					className="my-4"
 				/>
