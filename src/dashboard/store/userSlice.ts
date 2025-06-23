@@ -20,5 +20,5 @@ export const userSlice = createSlice({
 	}
 });
 
-export const { updateWorkStatus, testAction } = userSlice.actions;
+export const { updateWorkStatus } = userSlice.actions;
 export default userSlice.reducer;

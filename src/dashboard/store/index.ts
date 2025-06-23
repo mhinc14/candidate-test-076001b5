@@ -7,10 +7,6 @@ export const dashboardStore = configureStore({
 	reducer: {
 		user: userReducer
 	},
-	devTools:
-		process.env.NODE_ENV !== 'production' &&
-		window.__REDUX_DEVTOOLS_EXTENSION__ &&
-		window.__REDUX_DEVTOOLS_EXTENSION__(),
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(
 			createStateSyncMiddleware({

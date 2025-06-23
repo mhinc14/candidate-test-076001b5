@@ -3,14 +3,24 @@ import { DashboardRootState, DashboardDispatch } from '../store';
 import { updateWorkStatus } from '../store/userSlice';
 import { WorkStatus } from '../../shared/types';
 import { STATUS_LABELS } from '../../shared/constants';
+import { CustomSelect } from './CustomSelect';
 
 export const WorkStatusCard = ({ className = '' }: { className?: string }) => {
 	const { profile } = useSelector((state: DashboardRootState) => state.user);
 	const dispatch = useDispatch<DashboardDispatch>();
 
-	const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		dispatch(updateWorkStatus(e.target.value as WorkStatus));
+	const handleStatusChange = (status: WorkStatus) => {
+		dispatch(updateWorkStatus(status));
 	};
+
+	const options = [
+		{ value: 'looking' as WorkStatus, label: 'Currently looking for work' },
+		{ value: 'passive' as WorkStatus, label: 'Passively looking for work' },
+		{
+			value: 'not_looking' as WorkStatus,
+			label: "Don't want to hear about work"
+		}
+	];
 
 	return (
 		<div
@@ -21,17 +31,14 @@ export const WorkStatusCard = ({ className = '' }: { className?: string }) => {
 			</h3>
 			<div className="py-2">
 				<p>Update your availability for new opportunities:</p>
-				<select
+
+				<CustomSelect
 					value={profile.workStatus}
+					options={options}
 					onChange={handleStatusChange}
-					className="w-full p-3 border border-gray-200 rounded-md my-4 text-base"
-				>
-					<option value="looking">Currently looking for work</option>
-					<option value="passive">Passively looking for work</option>
-					<option value="not_looking">
-						Don't want to hear about work
-					</option>
-				</select>
+					className="my-4"
+				/>
+
 				<p className="mt-4 text-gray-500">
 					Your current status:{' '}
 					<strong>{STATUS_LABELS[profile.workStatus]}</strong>
