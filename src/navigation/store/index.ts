@@ -11,7 +11,7 @@ export const navStore = configureStore({
     getDefaultMiddleware().concat(
       createStateSyncMiddleware({
         source: STORE_SOURCES.NAVIGATION,
-        actionCreator: updateWorkStatus
+        actionCreator: updateWorkStatus,
       })
     ),
 });
